@@ -1,0 +1,13 @@
+{% extends 'recipeApp/base.html' %}
+
+{% block content %}
+<div class="form-signin">
+<h1 class="h3 mb-3 fw-normal">Add shopping list item:</h1>
+
+<form method="post" action="{% url 'recipeApp:add_shopping_item' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary w-100 py-2">Add item</button>
+</form>
+</div>
+{% endblock content %}

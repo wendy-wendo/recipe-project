@@ -1,0 +1,50 @@
+{% extends 'recipeApp/base.html' %}
+
+{% block extrastyles %}
+<style>
+    	body {
+        	background-color:f4f4f4;
+        }
+        
+    	h1 {
+        	text-align:center;
+        }
+        a {
+            color:black;
+            text-decoration: none;
+        }
+</style>
+{% endblock extrastyles %}
+
+
+{% block content %}
+<div class="shopping-list">
+	<h1>Shopping List</h1>
+
+    <ol list-style-type="decimal">
+        {% for item in shopping_items %}
+            <a href="{% url 'recipeApp:delete_shopping_item' item.id %}" class="x"  onclick="return confirmDelete()">X</a>
+    	    <li class="list-item">{{ item.name|title }}<span class="qty">{% if item.qty %}{{ item.qty }}{% endif %}</li>
+            
+        {% empty %}
+            <p>No items available for now.</p>
+        {% endfor %}
+    </ol>
+
+    <button><a href="{% url 'recipeApp:add_shopping_item' %}">Add item</a></button>
+</div>
+
+<script>
+// For strikethrough effect in shopping list    
+const listItems = document.querySelectorAll(".list-item");
+
+listItems.forEach((item) => {
+  item.addEventListener("click", () => {
+    item.style.textDecoration = item.style.textDecoration === "line-through" ? "none" : "line-through";
+    
+  });
+});
+
+</script>
+
+{% endblock content %}

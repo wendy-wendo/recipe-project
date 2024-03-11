@@ -1,0 +1,13 @@
+{% extends 'recipeApp/base.html' %}
+
+{% block content %}
+<div class="form-article">
+<h1 class="h3 mb-3 fw-normal">Edit article</h1>
+
+<form method="post" action="{% url 'recipeApp:edit_article' article.id %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary w-100 py-2" type="submit">Save changes</button>
+</form>
+</div>
+{% endblock content %}

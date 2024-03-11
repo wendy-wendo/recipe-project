@@ -1,0 +1,39 @@
+{% extends 'recipeApp/base.html' %}
+
+{% block extrastyles %}
+<style>
+    body {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 18px;
+    }
+    article {
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin: 10px;
+    }
+
+    article img {
+        width: 100%;
+        height: 250px;
+        display: block;
+        object-fit: contain;
+    }
+</style>
+{% endblock extrastyles %}
+
+{% block content %}
+<article>
+    {% if article.image %}
+        <img src="{{ article.image.url }}" alt="{{ article.topic }}" >
+    {% endif %}
+    <h2>{{ article.topic }}</h2>
+    <p>By {{ article.author }}</p>
+
+    {% for paragraph in paragraphs %}
+            {% if paragraph %}
+                <p>{{ paragraph }}</p>
+            {% endif %}
+    {% endfor %}
+
+</article>
+{% endblock content %}

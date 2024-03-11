@@ -1,0 +1,18 @@
+{% extends 'recipeApp/base.html' %}
+
+{% block content %}
+
+<h1>ALL RECIPES</h1>
+
+{% for recipe in recipes %}
+<div class="responsive">
+    <div class="gallery">
+      <a href="{% url 'recipeApp:recipe' recipe.id %}">
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" width="200" height="400">
+      </a>
+      <div class="desc">{{ recipe.name }}</div>
+      <div class="owner">{{ recipe.owner|upper }}</div>
+    </div>
+  </div>
+{% endfor %}
+{% endblock content %}

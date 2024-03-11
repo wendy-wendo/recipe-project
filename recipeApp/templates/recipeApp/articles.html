@@ -1,0 +1,62 @@
+{% extends 'recipeApp/base.html' %}
+
+{% block extrastyles %}
+<style>
+    /* Basic styling */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        color: #333;
+    }
+
+    main {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2em;
+    }
+
+    h1 {
+        color:black;
+        text-align: center;
+        text-decoration: underline;
+    }
+    button {
+        margin-left: 40%;
+    }
+    button a {
+        color: white;
+    }
+    button a:hover {
+        color: white;
+    }
+</style>
+{% endblock extrastyles %}
+
+
+{% block content %}
+<h1>ARTICLES</h1>
+
+<main>
+{% for article in articles %}
+<section class="article">
+    {% if article.image %}
+        <img src="{{ article.image.url }}" alt="{{ article.topic }}" width="200" height="200">
+    {% endif %}
+    <h2><a href="{% url 'recipeApp:article' article.id %}">{{ article.topic }}</a></h2>
+    <p>{{ article.author }}</p>
+    <p>{{ article }}</p>
+
+    {% if user.is_superuser %}
+        <a href="{% url 'recipeApp:edit_article' article.id %}">Edit</a>
+        <a style="float: right;" href="{% url 'recipeApp:delete_article' article.id %}" onclick="return confirmDelete()">Delete</a>
+    {% endif %}    
+</section>
+{% endfor %}
+</main>
+
+
+{% if user.is_superuser %}
+    <button class="btn btn-primary rounded-pill px-3"><a href="{% url 'recipeApp:add_article' %}">Add new article</a></button>
+{% endif %}
+
+{% endblock content %}

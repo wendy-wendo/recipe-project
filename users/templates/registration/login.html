@@ -1,0 +1,25 @@
+{% extends 'recipeApp/base.html' %}
+
+{% block extrastyles %}
+<style>
+    body {
+        background-color:#f8f9fa;
+    }
+    
+</style>
+{% endblock extrastyles %}
+
+{% block content %}
+
+<div class="form-signin">
+    <h1 class="h3 mb-3 fw-normal">Log in</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary w-100 py-2">Log in</button>
+    </form>
+
+</div>
+
+
+{% endblock content %}

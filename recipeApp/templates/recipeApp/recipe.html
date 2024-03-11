@@ -1,0 +1,104 @@
+{% extends 'recipeApp/base.html' %}
+
+{% block content %}
+<section class="recipe-listing">
+    <div class="recipe">
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}"  width="auto" height="200px" style="object-fit: cover;">
+        <div class="recipe-info">
+            <h2>{{ recipe.name|upper }}</h2>
+            <p class="recipe-description">{{ recipe.owner }}</p>
+            <div class="recipe-meta">
+                <div>{{ recipe.minutes }} min</div>
+                <div>{{ recipe.calories }} cal</div>
+                <div>{{ recipe.tag }}</div>
+            </div>
+            <a href="{{ recipe.link }}" target="_blank" class="btn" >View Recipe</a>
+            {% if saved_recipes == 0 %}
+                <a href="{% url 'recipeApp:save_recipe' recipe.id %}" class="btn" >Save Recipe</a>
+            {% else %}
+                <a class="btn" >Saved</a>
+            {% endif %}
+            
+        </div>
+    </div>
+</section>
+
+
+<div class="ingredient-container">
+    <h2>INGREDIENTS</h2>   
+
+    <ol style="list-style-type:circle;">
+        {% for ingredient in ingredients %}
+            <li>{{ ingredient|title }}</li>
+        {% empty %}
+            <p>No information available.</p>
+        {% endfor %}
+    </ul>
+
+    {% if recipe.uploader == request.user %}
+        <button class="btn-ingredient"><a href="{% url 'recipeApp:add_ingredient' recipe.id %}">Add new ingredient</a></button>
+    {% endif %} 
+
+    <button class="btn-ingredient"><a href="{% url 'recipeApp:ingredients_to_shopping' recipe.id %}">Add all to shopping list</a></button>
+</div>
+
+<div class="review-container">
+    <h2>REVIEWS</h2>
+
+    {% for review in reviews %}
+
+    <div class="review">
+        <h3>{{ review.user|upper }}</h3>
+
+        <ul>
+            <li style="display: inline-block;">
+                <i class="{% if review.rating > 0 %}fa-solid{% else %}fa-regular{% endif %} fa-star" style="color:gold;"></i> 
+            </li>
+            <li style="display: inline-block;">
+                <i class="{% if review.rating > 1 %}fa-solid{% else %}fa-regular{% endif %} fa-star" style="color:gold;"></i> 
+            </li>
+            <li style="display: inline-block;">
+                <i class="{% if review.rating > 2 %}fa-solid{% else %}fa-regular{% endif %} fa-star" style="color:gold;"></i> 
+            </li>
+            <li style="display: inline-block;">
+                <i class="{% if review.rating > 3 %}fa-solid{% else %}fa-regular{% endif %} fa-star" style="color:gold;"></i> 
+            </li>
+            <li style="display: inline-block;">
+                <i class="{% if review.rating > 4 %}fa-solid{% else %}fa-regular{% endif %} fa-star" style="color:gold;"></i> 
+            </li>
+        </ul>
+
+        <p class="comment">{{ review.comment }}</p>
+        <p class="date">Published on: {{ review.date_published }}</p>
+
+        {% if review.user == request.user %}
+            <a href="{% url 'recipeApp:edit_review' review.id %}">Edit</a>
+            <a style="float: right;" href="{% url 'recipeApp:delete_review' review.id %}" onclick="return confirmDelete()">Delete</a>
+        {% endif %}
+    </div>
+
+    {% endfor %}
+
+    <div class="add-review-button">
+        <button class="add-button" onclick="openReviewForm()">Add Review</button>
+    </div>
+
+    <div id="reviewForm" style="display: none;">
+        <h2>Add your review:</h2>
+        <form method="post" action="{% url 'recipeApp:recipe' recipe.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="add-button" type="submit">Submit</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    function openReviewForm() {
+      var reviewForm = document.getElementById("reviewForm");
+      reviewForm.style.display = "block";
+    }
+</script>
+
+{% endblock content %}

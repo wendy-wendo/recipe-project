@@ -1,0 +1,24 @@
+{% extends 'recipeApp/base.html' %}
+
+{% block extrastyles %}
+<style>
+    a {
+        color: white;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: none;
+        color: white;
+    }
+</style>
+{% endblock extrastyles %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1>Yumtums</h1>
+        <p>Yumtums is a recipe sharing website where you can browse recipes, save them to
+            your personal collection and add ingredients to the shopping list.
+        </p>
+        <button class="btn btn-primary rounded-pill px-3"><a href="{% url 'recipeApp:recipes' %}">View recipes</a></button>
+    </div>
+{% endblock content %}    

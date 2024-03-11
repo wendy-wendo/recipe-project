@@ -1,0 +1,14 @@
+{% extends 'recipeApp/base.html' %}
+
+{% block content %}
+<div class="form-signin">
+<h1>{{ recipe.name|upper }}</h1>
+<h2 class="h3 mb-3 fw-normal">Edit review</h2>
+
+<form method="post" action="{% url 'recipeApp:edit_review' review.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary w-100 py-2" type="submit">Save changes</button>
+</form>
+</div>
+{% endblock content %}
